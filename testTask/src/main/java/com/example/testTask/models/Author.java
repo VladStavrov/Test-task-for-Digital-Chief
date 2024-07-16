@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "author", uniqueConstraints = {@UniqueConstraint(columnNames = {"firstName", "lastName"})})
 public class Author {
     @jakarta.persistence.Id
     @Id

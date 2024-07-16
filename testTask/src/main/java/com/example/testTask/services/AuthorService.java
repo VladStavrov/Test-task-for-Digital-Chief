@@ -3,6 +3,7 @@ package com.example.testTask.services;
 import com.example.testTask.dto.authorDTO.AuthorDTO;
 import com.example.testTask.dto.authorDTO.CreateAuthorDTO;
 import com.example.testTask.dto.bookDTO.BookDTO;
+import com.example.testTask.exeptions.CustomException;
 import com.example.testTask.mappers.AuthorMapper;
 import com.example.testTask.mappers.BookMapper;
 import com.example.testTask.models.Author;
@@ -12,6 +13,7 @@ import com.example.testTask.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,15 +45,23 @@ public class AuthorService {
     }
 
     public AuthorDTO createAuthor(CreateAuthorDTO createAuthorDTO) {
-        Author author = authorMapper.toEntity(createAuthorDTO);
-        Author savedAuthor = authorRepository.save(author);
-        return authorMapper.toDTO(savedAuthor);
+        try {
+            Author author = authorMapper.toEntity(createAuthorDTO);
+            Author savedAuthor = authorRepository.save(author);
+            return authorMapper.toDTO(savedAuthor);
+        } catch (DataIntegrityViolationException ex) {
+            throw new CustomException(HttpStatus.CONFLICT, "Author with the same first name and last name already exists.", ex);
+        }
     }
     public AuthorDTO updateAuthor(Long authorId, CreateAuthorDTO createAuthorDTO) {
         Author existingAuthor = getAuthorById(authorId);
         authorMapper.updateEntity(createAuthorDTO,existingAuthor);
-        Author updatedAuthor = authorRepository.save(existingAuthor);
-        return authorMapper.toDTO(updatedAuthor);
+        try{
+            Author updatedAuthor = authorRepository.save(existingAuthor);
+            return authorMapper.toDTO(updatedAuthor);
+        } catch (DataIntegrityViolationException ex) {
+            throw new CustomException(HttpStatus.CONFLICT, "Author with the same first name and last name already exists.", ex);
+        }
     }
     public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
