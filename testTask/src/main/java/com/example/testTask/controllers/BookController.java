@@ -4,6 +4,7 @@ package com.example.testTask.controllers;
 import com.example.testTask.dto.bookDTO.BookDTO;
 import com.example.testTask.dto.bookDTO.CreateBookDTO;
 import com.example.testTask.services.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> createBook(@RequestBody CreateBookDTO createBookDTO) {
+    public ResponseEntity<BookDTO> createBook(@RequestBody @Valid CreateBookDTO createBookDTO) {
         BookDTO bookDTO = bookService.createBook(createBookDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(bookDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody CreateBookDTO createBookDTO) {
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id,@Valid @RequestBody CreateBookDTO createBookDTO) {
         BookDTO updatedBook = bookService.updateBook(id, createBookDTO);
         return ResponseEntity.ok(updatedBook);
     }

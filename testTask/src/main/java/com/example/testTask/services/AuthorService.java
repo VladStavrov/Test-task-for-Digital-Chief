@@ -24,10 +24,7 @@ import java.util.stream.Collectors;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
-    private final ModelMapper modelMapper;
     private final AuthorMapper authorMapper;
-    private final BookMapper bookMapper;
 
     public List<AuthorDTO> getAllAuthors() {
         return authorRepository.findAll().stream()

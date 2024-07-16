@@ -4,6 +4,7 @@ package com.example.testTask.controllers;
 import com.example.testTask.dto.authorDTO.AuthorDTO;
 import com.example.testTask.dto.authorDTO.CreateAuthorDTO;
 import com.example.testTask.services.AuthorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody CreateAuthorDTO createAuthorDTO) {
+    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody @Valid CreateAuthorDTO createAuthorDTO) {
         AuthorDTO authorDTO = authorService.createAuthor(createAuthorDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(authorDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody CreateAuthorDTO createAuthorDTO) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody @Valid CreateAuthorDTO createAuthorDTO) {
         AuthorDTO updatedAuthor = authorService.updateAuthor(id, createAuthorDTO);
         return ResponseEntity.ok(updatedAuthor);
     }

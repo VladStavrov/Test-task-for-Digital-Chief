@@ -25,7 +25,6 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final ModelMapper modelMapper;
     private final BookMapper bookMapper;
 
     public List<BookDTO> getAllBooks() {
