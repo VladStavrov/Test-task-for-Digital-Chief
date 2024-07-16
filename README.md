@@ -68,4 +68,4 @@ P.S. `firstName` + `lastName` являются уникальной комбин
 ### Сборка и запуск с Docker
 
 1. Соберите и запустите контейнеры с помощью Docker Compose:
-   docker-compose up --build
+   `docker-compose up --build`
