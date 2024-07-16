@@ -44,7 +44,7 @@ public class BookService {
     }
 
     public BookDTO createBook(CreateBookDTO createBookDTO) {
-        Author author = authorService.getAuthorById(createBookDTO.getAuthorId());
+        Author author = authorService.getAuthorById(createBookDTO.getAuthor());
 
 
         Book book = bookMapper.toEntity(createBookDTO);
@@ -55,7 +55,7 @@ public class BookService {
 
     public BookDTO updateBook(Long bookId, CreateBookDTO createBookDTO) {
         Book existingBook = getBookById(bookId);
-        Author author = authorService.getAuthorById(createBookDTO.getAuthorId());
+        Author author = authorService.getAuthorById(createBookDTO.getAuthor());
         bookMapper.updateEntity(createBookDTO,existingBook);
         existingBook.setAuthor(author);
         Book updatedBook = bookRepository.save(existingBook);

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateBookDTO {
-    private Long authorId;
+    private Long author;
     @Size(min = 3, message = "Title must be at least 3 characters long")
     private String title;
 
